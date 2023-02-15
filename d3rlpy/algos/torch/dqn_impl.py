@@ -129,7 +129,11 @@ class DQNImpl(DiscreteQFunctionMixin, TorchImplBase):
         assert self._targ_q_func is not None
         with torch.no_grad():
             next_actions = self._targ_q_func(batch.next_observations)
-            max_action = next_actions.argmax(dim=1)
+            bern_pr=bernoulli.rvs(p=.2, size=1)
+            if bern_pr == 1:
+                max_action=np.random.randint(0,len(next_actions))       
+            else:
+                max_action = next_actions.argmax(dim=1)
             return self._targ_q_func.compute_target(
                 batch.next_observations,
                 max_action,
