@@ -132,7 +132,7 @@ class DQNImpl(DiscreteQFunctionMixin, TorchImplBase):
             next_actions = self._targ_q_func(batch.next_observations)
             bern_pr=bernoulli.rvs(p=.2, size=1)
             if bern_pr == 1:
-                max_action= torch.tensor(np.random.randint(0,len(next_actions)))       
+                max_action= torch.tensor(np.random.randint(0, next_actions.size(dim=1)), device='cuda:0')       
             else:
                 max_action = next_actions.argmax(dim=1)
             return self._targ_q_func.compute_target(
@@ -149,7 +149,7 @@ class DQNImpl(DiscreteQFunctionMixin, TorchImplBase):
         assert self._q_func is not None
         bern_pr=bernoulli.rvs(p=.2, size=1)
         if bern_pr == 1:
-            max_action = torch.tensor(np.random.randint(0, self._q_func(x).size(dim=1)))       
+            max_action = torch.tensor(np.random.randint(0, self._q_func(x).size(dim=1)), device='cuda:0')       
         else:
             max_action = self._q_func(x).argmax(dim=1)
         return max_action
