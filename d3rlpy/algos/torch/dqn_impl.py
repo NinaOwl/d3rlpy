@@ -16,6 +16,7 @@ from ...torch_utility import TorchMiniBatch, hard_sync, torch_api, train_api
 from .base import TorchImplBase
 from .utility import DiscreteQFunctionMixin
 
+from scipy.stats import bernoulli
 
 class DQNImpl(DiscreteQFunctionMixin, TorchImplBase):
 
@@ -143,6 +144,15 @@ class DQNImpl(DiscreteQFunctionMixin, TorchImplBase):
     def _predict_best_action(self, x: torch.Tensor) -> torch.Tensor:
         assert self._q_func is not None
         return self._q_func(x).argmax(dim=1)
+    
+    def _predict_best_action_doubleDQN(self, x: torch.Tensor) -> torch.Tensor:
+        assert self._q_func is not None
+        bern_pr=bernoulli.rvs(p=.2, size=1)
+        if bern_pr == 1:
+            max_action=np.random.randint(0,len(self._q_func(x)))       
+        else:
+            max_action = self._q_func(x).argmax(dim=1)
+        return max_action
 
     def _sample_action(self, x: torch.Tensor) -> torch.Tensor:
         return self._predict_best_action(x)
@@ -167,7 +177,7 @@ class DoubleDQNImpl(DQNImpl):
     def compute_target(self, batch: TorchMiniBatch) -> torch.Tensor:
         assert self._targ_q_func is not None
         with torch.no_grad():
-            action = self._predict_best_action(batch.next_observations)
+            action = self._predict_best_action_doubleDQN(batch.next_observations)
             return self._targ_q_func.compute_target(
                 batch.next_observations,
                 action,
