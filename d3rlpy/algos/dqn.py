@@ -1,4 +1,5 @@
 from typing import Any, Dict, Optional, Sequence
+from scipy.stats import bernoulli
 
 from ..argument_utility import (
     EncoderArg,
