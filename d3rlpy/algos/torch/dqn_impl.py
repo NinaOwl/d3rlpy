@@ -19,7 +19,8 @@ from .utility import DiscreteQFunctionMixin
 from scipy.stats import bernoulli
 
 class DQNImpl(DiscreteQFunctionMixin, TorchImplBase):
-
+    _k: int
+    _allowed_actions: list
     _learning_rate: float
     _optim_factory: OptimizerFactory
     _encoder_factory: EncoderFactory
@@ -33,6 +34,8 @@ class DQNImpl(DiscreteQFunctionMixin, TorchImplBase):
 
     def __init__(
         self,
+        k: int,
+        allowed_actions: list,
         observation_shape: Sequence[int],
         action_size: int,
         learning_rate: float,
@@ -52,6 +55,8 @@ class DQNImpl(DiscreteQFunctionMixin, TorchImplBase):
             action_scaler=None,
             reward_scaler=reward_scaler,
         )
+        self._k = k
+        self._allowed_acions = allowed_acions
         self._learning_rate = learning_rate
         self._optim_factory = optim_factory
         self._encoder_factory = encoder_factory
@@ -131,10 +136,14 @@ class DQNImpl(DiscreteQFunctionMixin, TorchImplBase):
         with torch.no_grad():
             next_actions = self._targ_q_func(batch.next_observations)
             bern_pr=bernoulli.rvs(p=.2, size=1)
-            if bern_pr == 1:
-                max_action= torch.tensor(np.random.randint(0, next_actions.size(dim=1)), device='cuda:0')       
-            else:
-                max_action = next_actions.argmax(dim=1)
+            max_actions = next_actions.argsort(axis=1)
+            t = 0
+            max_action = []
+            for i in range(len(max_actions)):
+                if t < self._k:
+                    if max_actions[len(max_actions) - 1 - i] in self._allowed_actions:
+                        max_action.append(max_actions[len(max_actions) - 1 - i])
+                        t = t + 1
             return self._targ_q_func.compute_target(
                 batch.next_observations,
                 max_action,
