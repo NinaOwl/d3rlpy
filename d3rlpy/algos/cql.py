@@ -317,8 +317,8 @@ class DiscreteCQL(DoubleDQN):
     def __init__(
         self,
         *,
-        k: 3,
-        allowed_actions: [None],
+        k: int = 3,
+        allowed_actions: list = ["U"],
         learning_rate: float = 6.25e-5,
         optim_factory: OptimizerFactory = AdamFactory(),
         encoder_factory: EncoderArg = "default",
