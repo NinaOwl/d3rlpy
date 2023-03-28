@@ -56,7 +56,7 @@ class DQNImpl(DiscreteQFunctionMixin, TorchImplBase):
             reward_scaler=reward_scaler,
         )
         self._k = k
-        self._allowed_acions = allowed_acions
+        self._allowed_actions = allowed_actions
         self._learning_rate = learning_rate
         self._optim_factory = optim_factory
         self._encoder_factory = encoder_factory
