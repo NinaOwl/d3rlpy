@@ -317,8 +317,8 @@ class DiscreteCQL(DoubleDQN):
     def __init__(
         self,
         *,
-        k: int = 3,
-        allowed_actions: list = ["U"],
+        #k: int = 3,
+        #allowed_actions: list = ["U"],
         learning_rate: float = 6.25e-5,
         optim_factory: OptimizerFactory = AdamFactory(),
         encoder_factory: EncoderArg = "default",
@@ -337,8 +337,8 @@ class DiscreteCQL(DoubleDQN):
         **kwargs: Any,
     ):
         super().__init__(
-            allowed_actions = allowed_actions,
-            k = k,
+            #allowed_actions = allowed_actions,
+            #k = k,
             learning_rate=learning_rate,
             optim_factory=optim_factory,
             encoder_factory=encoder_factory,
@@ -363,8 +363,8 @@ class DiscreteCQL(DoubleDQN):
         self._impl = DiscreteCQLImpl(
             observation_shape=observation_shape,
             action_size=action_size,
-            k = self._k,
-            allowed_actions = self._allowed_actions,
+            #k = self._k,
+            #allowed_actions = self._allowed_actions,
             learning_rate=self._learning_rate,
             optim_factory=self._optim_factory,
             encoder_factory=self._encoder_factory,
