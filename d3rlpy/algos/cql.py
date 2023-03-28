@@ -337,7 +337,7 @@ class DiscreteCQL(DoubleDQN):
         **kwargs: Any,
     ):
         super().__init__(
-            allowed_actions = allowed_acttions,
+            allowed_actions = allowed_actions,
             k = k,
             learning_rate=learning_rate,
             optim_factory=optim_factory,
