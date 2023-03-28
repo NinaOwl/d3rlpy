@@ -158,10 +158,10 @@ class DQNImpl(DiscreteQFunctionMixin, TorchImplBase):
         allowed_actions = [ 2, 42, 22, 26, 18, 16, 33, 21, 25,  1, 14,  9, 15, 20,  4, 38,  8,
        43, 36, 44, 12, 29,  7, 32, 23, 39, 27,  3, 37, 31,  6, 35, 17, 40,
        30, 13, 10, 19, 34,  5, 11, 24, 28, 41]
-        for i in range(len(max_actions)):
-            if max_actions[len(max_actions) - 1 - i].to(torch.int32) in allowed_actions:
-                max_action = max_actions[len(max_actions) - 1 - i]
-                break
+        i = 0
+        while max_actions[max_actions.size(dim=0) - 1 - i].to(torch.int32) not in allowed_actions:
+            i = i + 1
+        max_action = max_actions[len(max_actions) - 1 - i]
         return torch.tensor(max_action)
     
     def _predict_best_action_doubleDQN(self, x: torch.Tensor) -> torch.Tensor:
