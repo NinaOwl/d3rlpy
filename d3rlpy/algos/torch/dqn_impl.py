@@ -154,7 +154,10 @@ class DQNImpl(DiscreteQFunctionMixin, TorchImplBase):
     def _predict_best_action(self, x: torch.Tensor) -> torch.Tensor:
         assert self._q_func is not None
         max_actions = self._q_func(x).argsort(axis=1)
-        print(type("max_actions"))
+        print(type(max_actions))
+        print(max_actions.size(dim=0))
+        print(max_actions[max_actions.size(dim=0) - 1 - i])
+        print(max_actions[max_actions.size(dim=0) - 1 - i].to(torch.int32))
         allowed_actions = [ 2, 42, 22, 26, 18, 16, 33, 21, 25,  1, 14,  9, 15, 20,  4, 38,  8,
        43, 36, 44, 12, 29,  7, 32, 23, 39, 27,  3, 37, 31,  6, 35, 17, 40,
        30, 13, 10, 19, 34,  5, 11, 24, 28, 41]
