@@ -318,7 +318,7 @@ class DiscreteCQL(DoubleDQN):
         self,
         *,
         k: 3,
-        allowed_actions: [None]
+        allowed_actions: [None],
         learning_rate: float = 6.25e-5,
         optim_factory: OptimizerFactory = AdamFactory(),
         encoder_factory: EncoderArg = "default",
