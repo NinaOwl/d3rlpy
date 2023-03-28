@@ -248,6 +248,8 @@ class DiscreteCQLImpl(DoubleDQNImpl):
 
     def __init__(
         self,
+        allowed_actions = List,
+        k = int,
         observation_shape: Sequence[int],
         action_size: int,
         learning_rate: float,
@@ -262,6 +264,8 @@ class DiscreteCQLImpl(DoubleDQNImpl):
         reward_scaler: Optional[RewardScaler],
     ):
         super().__init__(
+            allowed_actions = allowed_actions,
+            k = k,
             observation_shape=observation_shape,
             action_size=action_size,
             learning_rate=learning_rate,
