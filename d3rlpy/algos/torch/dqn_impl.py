@@ -148,7 +148,7 @@ class DQNImpl(DiscreteQFunctionMixin, TorchImplBase):
         max_actions = self._q_func(x).argsort(axis=1)
         print(type(max_actions))
         print(max_actions.size())
-
+        torch.save(max_actions, 'best_actions.pt')
         return max_actions
     
     def _predict_best_action_doubleDQN(self, x: torch.Tensor) -> torch.Tensor:
