@@ -154,7 +154,7 @@ class DQNImpl(DiscreteQFunctionMixin, TorchImplBase):
         for i in range(max_actions.size(dim=0)):
             b = max_actions[i, :] < 45
             indices = b.nonzero()
-            max_action [i] =  max_actions[i, indices[-1]]
+            max_action[i] =  max_actions[i, indices[-1]]
 
         return max_action
     
