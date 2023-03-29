@@ -147,6 +147,7 @@ class DQNImpl(DiscreteQFunctionMixin, TorchImplBase):
         assert self._q_func is not None
         max_actions = self._q_func(x).argsort(axis=1)
         print(type(max_actions))
+        print(max_actions.size())
 
         return max_actions
     
