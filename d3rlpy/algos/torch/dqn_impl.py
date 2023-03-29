@@ -137,14 +137,6 @@ class DQNImpl(DiscreteQFunctionMixin, TorchImplBase):
             next_actions = self._targ_q_func(batch.next_observations)
             bern_pr=bernoulli.rvs(p=.2, size=1)
             max_actions = next_actions.argsort(axis=1)
-            allowed_actions = [ 2, 42, 22, 26, 18, 16, 33, 21, 25,  1, 14,  9, 15, 20,  4, 38,  8,
-       43, 36, 44, 12, 29,  7, 32, 23, 39, 27,  3, 37, 31,  6, 35, 17, 40,
-       30, 13, 10, 19, 34,  5, 11, 24, 28, 41]
-            for i in range(len(max_actions)):
-                if max_actions[len(max_actions) - 1 - i] in allowed_actions:
-                    max_action = max_actions[len(max_actions) - 1 - i]
-                    t = t + 1
-                    break
             return self._targ_q_func.compute_target(
                 batch.next_observations,
                 max_action,
@@ -158,14 +150,13 @@ class DQNImpl(DiscreteQFunctionMixin, TorchImplBase):
         print(max_actions.size())
         print(max_actions[max_actions.size(dim=0) - 1 - 1])
         print(max_actions[max_actions.size(dim=0) - 1 - 1].to(torch.int32))
-        allowed_actions = [ 2, 42, 22, 26, 18, 16, 33, 21, 25,  1, 14,  9, 15, 20,  4, 38,  8,
-       43, 36, 44, 12, 29,  7, 32, 23, 39, 27,  3, 37, 31,  6, 35, 17, 40,
-       30, 13, 10, 19, 34,  5, 11, 24, 28, 41]
-        i = 0
-        while max_actions[max_actions.size(dim=0) - 1 - i].to(torch.int32) not in allowed_actions:
-            i = i + 1
-        max_action = max_actions[len(max_actions) - 1 - i]
-        return torch.tensor(max_action)
+        max_action = torch.randn(max_actions.size(dim=0))
+        for i in range(max_actions.size(dim=0)):
+            b = a[i, :] < 45
+            indices = b.nonzero()
+            max_action [i] = a[i, indices[-1]]
+
+        return max_action
     
     def _predict_best_action_doubleDQN(self, x: torch.Tensor) -> torch.Tensor:
         assert self._q_func is not None
