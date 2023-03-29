@@ -146,7 +146,7 @@ class DQNImpl(DiscreteQFunctionMixin, TorchImplBase):
     def _predict_best_action(self, x: torch.Tensor) -> torch.Tensor:
         assert self._q_func is not None
         max_actions = self._q_func(x).argsort(axis=1)
-
+        print(type(max_actions))
 
         return max_actions
     
