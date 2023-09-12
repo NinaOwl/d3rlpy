@@ -98,8 +98,9 @@ class DQN(AlgoBase):
             gamma=gamma,
             scaler=scaler,
             reward_scaler=reward_scaler,
-            kwargs=kwargs,
             epsilon = epsilon,
+            kwargs=kwargs,
+
         )
         self._epsilon = epsilon
         self._learning_rate = learning_rate
