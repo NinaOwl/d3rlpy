@@ -22,6 +22,7 @@ class DQNImpl(DiscreteQFunctionMixin, TorchImplBase):
    # _k: int
     #_allowed_actions: list
     _learning_rate: float
+    _epsilon: float
     _optim_factory: OptimizerFactory
     _encoder_factory: EncoderFactory
     _q_func_factory: QFunctionFactory
@@ -47,7 +48,7 @@ class DQNImpl(DiscreteQFunctionMixin, TorchImplBase):
         use_gpu: Optional[Device],
         scaler: Optional[Scaler],
         reward_scaler: Optional[RewardScaler],
-        epsilon: epsilon,
+        epsilon: float
     ):
         super().__init__(
             observation_shape=observation_shape,
