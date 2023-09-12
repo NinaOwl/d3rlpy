@@ -47,7 +47,7 @@ class DQNImpl(DiscreteQFunctionMixin, TorchImplBase):
         use_gpu: Optional[Device],
         scaler: Optional[Scaler],
         reward_scaler: Optional[RewardScaler],
-        eps: Optional[Epsilon]
+        epsilon: epsilon,
     ):
         super().__init__(
             observation_shape=observation_shape,
