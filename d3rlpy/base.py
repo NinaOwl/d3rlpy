@@ -906,9 +906,21 @@ class LearnableBase:
         return self._gamma
 
     @gamma.setter
+    def epsilon(self, epsilon: float) -> None:
+        self._gamma = gamma
+    @property
+    def epsilon(self) -> float:
+        """Epsilon.
+
+        Returns:
+            float: Epsilon.
+
+        """
+        return self._epsilon
+
+    @gamma.setter
     def gamma(self, gamma: float) -> None:
         self._gamma = gamma
-
     @property
     def scaler(self) -> Optional[Scaler]:
         """Preprocessing scaler.
