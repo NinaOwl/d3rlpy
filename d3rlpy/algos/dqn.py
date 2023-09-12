@@ -66,6 +66,7 @@ class DQN(AlgoBase):
     _encoder_factory: EncoderFactory
     _q_func_factory: QFunctionFactory
     _n_critics: int
+    _epsilon: float
     _target_update_interval: int
     _use_gpu: Optional[Device]
     _impl: Optional[DQNImpl]
@@ -81,6 +82,7 @@ class DQN(AlgoBase):
         n_frames: int = 1,
         n_steps: int = 1,
         gamma: float = 0.99,
+        epsilon: float = 0.2,
         n_critics: int = 1,
         target_update_interval: int = 8000,
         use_gpu: UseGPUArg = False,
@@ -97,7 +99,9 @@ class DQN(AlgoBase):
             scaler=scaler,
             reward_scaler=reward_scaler,
             kwargs=kwargs,
+            epsilon = epsilon,
         )
+        self._epsilon = epsilon
         self._learning_rate = learning_rate
         self._optim_factory = optim_factory
         self._encoder_factory = check_encoder(encoder_factory)
@@ -122,6 +126,7 @@ class DQN(AlgoBase):
             use_gpu=self._use_gpu,
             scaler=self._scaler,
             reward_scaler=self._reward_scaler,
+            epsilon=self._epsilon
         )
         self._impl.build()
 
@@ -189,6 +194,7 @@ class DoubleDQN(DQN):
         self._impl = DoubleDQNImpl(
             observation_shape=observation_shape,
             action_size=action_size,
+            epsilon = self._epsilon,
             learning_rate=self._learning_rate,
             optim_factory=self._optim_factory,
             encoder_factory=self._encoder_factory,
