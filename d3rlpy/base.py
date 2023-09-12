@@ -145,6 +145,7 @@ class LearnableBase:
     _loss_history: DefaultDict[str, List[float]]
     _active_logger: Optional[D3RLPyLogger]
     _grad_step: int
+    _epsilon: float
 
     def __init__(
         self,
@@ -157,12 +158,14 @@ class LearnableBase:
         reward_scaler: RewardScalerArg = None,
         real_ratio: float = 1.0,
         generated_maxlen: int = 100000,
+        epsilon: float = 0.2,
         kwargs: Optional[Dict[str, Any]] = None,
     ):
         self._batch_size = batch_size
         self._n_frames = n_frames
         self._n_steps = n_steps
         self._gamma = gamma
+        self._epsilon = epsilon
         self._scaler = check_scaler(scaler)
         self._action_scaler = check_action_scaler(action_scaler)
         self._reward_scaler = check_reward_scaler(reward_scaler)
