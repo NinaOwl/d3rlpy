@@ -47,6 +47,7 @@ class TransitionMiniBatch:
         transitions: List[Transition],
         n_frames: int = ...,
         n_steps: int = ...,
+        epsilon: float = ...,
         gamma: float = ...,
     ): ...
     @property
