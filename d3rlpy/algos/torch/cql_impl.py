@@ -257,6 +257,7 @@ class DiscreteCQLImpl(DoubleDQNImpl):
         gamma: float,
         n_critics: int,
         alpha: float,
+        epsilon: float,
         use_gpu: Optional[Device],
         scaler: Optional[Scaler],
         reward_scaler: Optional[RewardScaler],
@@ -272,6 +273,7 @@ class DiscreteCQLImpl(DoubleDQNImpl):
             n_critics=n_critics,
             use_gpu=use_gpu,
             scaler=scaler,
+            epsilon=epsilon,
             reward_scaler=reward_scaler,
         )
         self._alpha = alpha
