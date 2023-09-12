@@ -47,6 +47,7 @@ class DQNImpl(DiscreteQFunctionMixin, TorchImplBase):
         use_gpu: Optional[Device],
         scaler: Optional[Scaler],
         reward_scaler: Optional[RewardScaler],
+        eps: Optional[Epsilon]
     ):
         super().__init__(
             observation_shape=observation_shape,
@@ -54,6 +55,7 @@ class DQNImpl(DiscreteQFunctionMixin, TorchImplBase):
             scaler=scaler,
             action_scaler=None,
             reward_scaler=reward_scaler,
+            eps = eps
         )
         #self._k = k
         #self._allowed_actions = allowed_actions
@@ -152,7 +154,7 @@ class DQNImpl(DiscreteQFunctionMixin, TorchImplBase):
     
     def _predict_best_action_doubleDQN(self, x: torch.Tensor) -> torch.Tensor:
         assert self._q_func is not None
-        bern_pr=bernoulli.rvs(p=.2, size=1)
+        bern_pr=bernoulli.rvs(p=self.eps, size=1)
         if bern_pr == 1:
             max_action = torch.tensor(np.random.randint(0, self._q_func(x).size(dim=1)), device='cpu')       
         else:
