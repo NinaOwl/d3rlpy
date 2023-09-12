@@ -13,6 +13,7 @@ class TransitionIterator(metaclass=ABCMeta):
     _generated_transitions: FIFOQueue[Transition]
     _batch_size: int
     _n_steps: int
+    _epsilon: float
     _gamma: float
     _n_frames: int
     _real_ratio: float
@@ -25,6 +26,7 @@ class TransitionIterator(metaclass=ABCMeta):
         batch_size: int,
         n_steps: int = 1,
         gamma: float = 0.99,
+        epsilon: float = 0.2,
         n_frames: int = 1,
         real_ratio: float = 1.0,
         generated_maxlen: int = 100000,
@@ -34,6 +36,7 @@ class TransitionIterator(metaclass=ABCMeta):
         self._batch_size = batch_size
         self._n_steps = n_steps
         self._gamma = gamma
+        self._epsilon = epsilon
         self._n_frames = n_frames
         self._real_ratio = real_ratio
         self._real_batch_size = batch_size
@@ -55,6 +58,7 @@ class TransitionIterator(metaclass=ABCMeta):
         batch = TransitionMiniBatch(
             transitions,
             n_frames=self._n_frames,
+            epsilon = self._epsilon,
             n_steps=self._n_steps,
             gamma=self._gamma,
         )
