@@ -85,6 +85,7 @@ class CQL(AlgoBase):
             encoder factory for the critic.
         q_func_factory (d3rlpy.models.q_functions.QFunctionFactory or str):
             Q function factory.
+        epsilon: epsilon (float) for epsilon-greedy
         batch_size (int): mini-batch size.
         n_frames (int): the number of frames to stack for image observation.
         n_steps (int): N-step TD calculation.
@@ -123,6 +124,7 @@ class CQL(AlgoBase):
     _critic_encoder_factory: EncoderFactory
     _q_func_factory: QFunctionFactory
     _tau: float
+    _epsilon: float
     _n_critics: int
     _initial_temperature: float
     _initial_alpha: float
@@ -140,6 +142,7 @@ class CQL(AlgoBase):
         critic_learning_rate: float = 3e-4,
         temp_learning_rate: float = 1e-4,
         alpha_learning_rate: float = 1e-4,
+        epsilon = 0.2,
         actor_optim_factory: OptimizerFactory = AdamFactory(),
         critic_optim_factory: OptimizerFactory = AdamFactory(),
         temp_optim_factory: OptimizerFactory = AdamFactory(),
@@ -226,6 +229,7 @@ class CQL(AlgoBase):
             soft_q_backup=self._soft_q_backup,
             use_gpu=self._use_gpu,
             scaler=self._scaler,
+            epsilon = self._epsilon,
             action_scaler=self._action_scaler,
             reward_scaler=self._reward_scaler,
         )
@@ -289,6 +293,7 @@ class DiscreteCQL(DoubleDQN):
             optimizer factory.
         encoder_factory (d3rlpy.models.encoders.EncoderFactory or str):
             encoder factory.
+        epsilon (float) - for epsilon greedy,
         q_func_factory (d3rlpy.models.q_functions.QFunctionFactory or str):
             Q function factory.
         batch_size (int): mini-batch size.
@@ -326,6 +331,7 @@ class DiscreteCQL(DoubleDQN):
         batch_size: int = 32,
         n_frames: int = 1,
         n_steps: int = 1,
+        epsilon = 0.2,
         gamma: float = 0.99,
         n_critics: int = 1,
         target_update_interval: int = 8000,
@@ -347,6 +353,7 @@ class DiscreteCQL(DoubleDQN):
             n_frames=n_frames,
             n_steps=n_steps,
             gamma=gamma,
+            epsilon = epsilon,
             n_critics=n_critics,
             target_update_interval=target_update_interval,
             use_gpu=use_gpu,
@@ -370,6 +377,7 @@ class DiscreteCQL(DoubleDQN):
             encoder_factory=self._encoder_factory,
             q_func_factory=self._q_func_factory,
             gamma=self._gamma,
+            epsilon = self._epsilon,
             n_critics=self._n_critics,
             alpha=self._alpha,
             use_gpu=self._use_gpu,
