@@ -127,7 +127,7 @@ class DQN(AlgoBase):
             use_gpu=self._use_gpu,
             scaler=self._scaler,
             reward_scaler=self._reward_scaler,
-            epsilon=self._epsilon
+            epsilon=self._epsilon,
         )
         self._impl.build()
 
