@@ -156,7 +156,7 @@ class DQNImpl(DiscreteQFunctionMixin, TorchImplBase):
     
     def _predict_best_action_doubleDQN(self, x: torch.Tensor) -> torch.Tensor:
         assert self._q_func is not None
-        bern_pr=bernoulli.rvs(p=self.epsilon, size=1)
+        bern_pr=bernoulli.rvs(p=self._epsilon, size=1)
         if bern_pr == 1:
             max_action = torch.tensor(np.random.randint(0, self._q_func(x).size(dim=1)), device='cpu')       
         else:
