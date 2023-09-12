@@ -331,7 +331,7 @@ class DiscreteCQL(DoubleDQN):
         batch_size: int = 32,
         n_frames: int = 1,
         n_steps: int = 1,
-        epsilon = 0.2,
+        epsilon: float = 0.2,
         gamma: float = 0.99,
         n_critics: int = 1,
         target_update_interval: int = 8000,
