@@ -27,12 +27,12 @@ if __name__ == "__main__":
                             })
 
     # main setup
-    setup(name="d3rlpy",
+    setup(name="crab",
           version=__version__,
           description="An offline deep reinforcement learning library",
           long_description=open("README.md").read(),
           long_description_content_type="text/markdown",
-          url="https://github.com/takuseno/d3rlpy",
+          url="https://github.com/NinaOwl/d3rlpy",
           author="Takuma Seno",
           author_email="takuma.seno@gmail.com",
           license="MIT License",
