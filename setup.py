@@ -27,8 +27,8 @@ if __name__ == "__main__":
                             })
 
     # main setup
-    setup(name="crab",
-          version=__version__,
+    setup(name="crab-tim",
+          version='{{VERSION_PLACEHOLDER}}',
           description="An offline deep reinforcement learning library",
           long_description=open("README.md").read(),
           long_description_content_type="text/markdown",
